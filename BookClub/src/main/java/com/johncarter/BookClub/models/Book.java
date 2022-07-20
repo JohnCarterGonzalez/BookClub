@@ -19,48 +19,44 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name="books")
 public class Book {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@NotEmpty(message = "A title is required")
-	@Size(min=1, max=50, message = "The title must be between 1 and 50 characters")
-	private String title;
-
-	@NotEmpty(message = "An author is required")
-	@Size(min = 1, max = 100, message = "The name(s) of the author must be between 1 and 100 characters")
-	private String author;
-
-	@NotEmpty(message = "Please provide a description of the book")
-	@Size(min = 3, max = 255, message = "The description must be between 3 and 255 characters")
-	private String desc;
-
-	@Column(updatable = false)
-	private Date createdAt;
-	private Date updatedAt;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
+	@NotEmpty(message="Title required")
+	@Size(min=1, max=50, message="Please enter a title between 1 and 50 characters")
+    private String title;
+	
+	@NotEmpty(message="Author required")
+	@Size(min=1, max= 100, message="Please enter the name(s) of the author(s) with the length of characters from 1 to 100")
+    private String author;
+	
+	@NotEmpty(message="Thoughts required")
+	@Size(min=5, max=255, message="The thought must be between 5 and 255 characters long.")
+    private String description;
+    
+    @Column(updatable=false)
+    private Date createdAt;
+    private Date updatedAt;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
+    
+    public Book() {
+        
+    }
+    
+    @PrePersist
+    protected void onCreate(){
+        this.createdAt = new Date();
+    }
+    @PreUpdate
+    protected void onUpdate(){
+        this.updatedAt = new Date();
+    }
 
-	@PrePersist
-	protected void onCreate() {
-		this.createdAt = new Date();
-	}
-
-	@PreUpdate
-	protected void onUpdate() {
-		this.updatedAt = new Date();
-	}
-
-	//constructor for the model
-	public Book(){
-	}
-
-	/**
-	 * GETTERS AND SETTERS 
-	 */
 	public Long getId() {
 		return id;
 	}
@@ -85,12 +81,12 @@ public class Book {
 		this.author = author;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Date getCreatedAt() {
@@ -109,4 +105,15 @@ public class Book {
 		this.updatedAt = updatedAt;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    
+
+	
 }
