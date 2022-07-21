@@ -35,8 +35,102 @@ public class BookController {
 			return "redirect:/";
 		}
 
-		m.addAttribute("books", books.all());
-		m.addAttribute("user", users.findById(Long)s.getAttribute("userId")));
+		m.addAttribute("books", brepo.all());
+		m.addAttribute("user", urepo.findById(Long)s.getAttribute("userId")));
+		return "dashboard.jsp";
+	}
+
+	@GetMapping("/addBook")
+	public String addBook(@ModelAttribute("book") Book b, Model m, HttpSession s) {
+
+		User user = urepo.findById(Long)s.getAttribute("userId"));
+		m.addAttribute("user", user);
+
+		return "addBook.jsp";
+	}
+
+	@PostMapping("/books") 
+	public String createBook(@Valid @ModelAttribute("book") Book b, BindingResult r) {
+
+		if (r.hasErrors()) {
+			return "addBook.jsp";
+		}
+
+		brepo.create(b);
+
+		return "redirect:/dashboard";
+	}
+
+	@GetMapping("/books/{id}/edit")
+	public String editBook(Model m, @PathVariable("id") Long id, HttpSession s) {
+
+		if (s.getAttribute("userId") == null ) {
+			return "redirect:/";
+		}
+
+		Book b = brepo.findById(id);
+		m.addAttribute("book", b);
+
+		return "editBook.jsp";
 	}
 	 
+	@GetMapping("books/{id}")
+	public String showBook(Model m, @PathVariable("id") Long id, HttpSession s) {
+
+		if(s.getAttribute("userId") == null) {
+			return "redirect:/";
+		}
+
+		Book b = brepo.findById(id);
+		m.addAttribute("book", b);
+		m.addAttribute("user", urepo.findById(Long)s.getAttribute("userId")));
+		return "showBook.jsp";
+	}
+
+	@PutMapping("books/{id}")
+	public String update(@Valid @ModelAttribute("book") Book b, BindingResult r, Model m) {
+		
+		if(r.hasErrors()) {
+			return "editBook.jsp";
+		}
+		
+		brepo.update(b);
+		return "redirect:/dashboard";
+
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession s) {
+		s.invalidate();
+		return "redirect:/";
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
