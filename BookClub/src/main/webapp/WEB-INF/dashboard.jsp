@@ -10,14 +10,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Tacos</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/main.css"> <!-- change to match your file/naming structure -->
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<title>Dashboard</title>
 </head>
 <body>
-	<h1>TEST</h1>
+	<div class="container">
+	<div class="row">
+		<h1 class="text-primary">Welcome, <c:out value="${user.userName}"/> to your Book Shelf</h1>
+		<h3 class=text-dark">Find actions here:</h3>
+		<a href = "/logout">Logout</a>
+		<a href = "/add/Book">Add a Book to your Shelf</a>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col"><c:out value="${id}"/></th>
+					<th scope="col">Title</th>
+					<th scope="col">Author Name</th>
+					<th scope="col">Posted By</th>
+					<th scope="col">Actions</th>
+				</tr>	
+			</thead>
+			<tbody>
+			<c:forEach var="x" items="${books}">
+				<tr>
+					<td><a href="/books/${x.id}"><c:out value="${x.title}"/></a></td>
+					<td><c:out value="${x.author}"/></td>
+					<td><c:out value="${x.user.userName}"/></td>
+					<td><a href="/books/edit/{x.id}"<c:out value="${x.id}"/>">Edit</a>
+					<form action="/books/${x.id}" method="post">
+					    <input type="hidden" name="_method" value="delete">
+					    <input type="submit" class="btn btn-danger" value="Delete">
+					</form>
+					</td>
+				</tr>	
+			</c:forEach>
+			</tbody>
+		</table>
+	</div>	
 </body>
 </html>

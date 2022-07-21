@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,10 @@ public class BookController {
 	@Autowired
 	private BookService brepo;
 
+	/*
+	GetMapping for the App
+	*/
+
 	@GetMapping("/dashboard")
 	public String dash(Model m, HttpSession s) {
 
@@ -40,7 +45,7 @@ public class BookController {
 		return "dashboard.jsp";
 	}
 
-	@GetMapping("/addBook")
+	@GetMapping("/add/book")
 	public String addBook(@ModelAttribute("book") Book b, Model m, HttpSession s) {
 
 		User user = urepo.findById(Long)s.getAttribute("userId"));
@@ -49,19 +54,8 @@ public class BookController {
 		return "addBook.jsp";
 	}
 
-	@PostMapping("/books") 
-	public String createBook(@Valid @ModelAttribute("book") Book b, BindingResult r) {
 
-		if (r.hasErrors()) {
-			return "addBook.jsp";
-		}
-
-		brepo.create(b);
-
-		return "redirect:/dashboard";
-	}
-
-	@GetMapping("/books/{id}/edit")
+	@GetMapping("/books/edit/{id}")
 	public String editBook(Model m, @PathVariable("id") Long id, HttpSession s) {
 
 		if (s.getAttribute("userId") == null ) {
@@ -87,6 +81,28 @@ public class BookController {
 		return "showBook.jsp";
 	}
 
+	@GetMapping("/logout")
+	public String logout(HttpSession s) {
+		s.invalidate();
+		return "redirect:/";
+	}
+
+	/*
+	POST and PUT mapps for the App
+	*/
+
+	@PostMapping("/books/create") 
+	public String createBook(@Valid @ModelAttribute("book") Book b, BindingResult r) {
+
+		if (r.hasErrors()) {
+			return "addBook.jsp";
+		}
+
+		brepo.create(b);
+
+		return "redirect:/dashboard";
+	}
+
 	@PutMapping("books/{id}")
 	public String update(@Valid @ModelAttribute("book") Book b, BindingResult r, Model m) {
 		
@@ -99,11 +115,12 @@ public class BookController {
 
 	}
 
-	@GetMapping("/logout")
-	public String logout(HttpSession s) {
-		s.invalidate();
-		return "redirect:/";
+	@DeleteMapping("/books/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		brepo.delete(id);
+		return "redirect/dashboard";
 	}
+
 }
 
 

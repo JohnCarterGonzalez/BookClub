@@ -14,7 +14,7 @@ public class BookService {
 	@Autowired
 	private BookRepository brepo;
 
-	public Book findbyId(Long id) {
+	public Book findById(Long id) {
 		Optional<Book> result = brepo.findById(id);
 		if(result.isPresent()) {
 			return result.get();
