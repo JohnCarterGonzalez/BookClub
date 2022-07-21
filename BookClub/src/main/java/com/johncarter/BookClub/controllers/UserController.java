@@ -24,23 +24,27 @@ public class UserController {
 	 */
 	
 	@PostMapping("/reg")
-	public String reg(@Valid @ModelAttribute("nU") User nU, BindingResult r, Model m, HttpSession s) {
+	public String reg(@Valid @ModelAttribute("nUser") User nUser, BindingResult r, Model m, HttpSession s) {
 		//Todo --call a reg method in the service 
 		//extra validations and create a user
+		User user = urepo.reg(nUser, r);
 		if(r.hasErrors()) {
 			m.addAttribute("nLog", new RegisterLogin());
 			return "logreg.jsp";
 		}
+
+		//store Id of user, log them in
+		s.setAttribute("userId", user.getId());
 		return "redirect:/home";
 	}
 	
 	@PostMapping("/log")
-	public String login(@Valid @ModelAttribute("newLogin") LoginUser nL, BindingResult result, Model m, HttpSession s) {
+	public String login(@Valid @ModelAttribute("nLog") RegisterLogin nLog, BindingResult r, Model m, HttpSession s) {
 		//once service impl
-		// User u = uServ.login(newLogin, result);
+		User user = urepo.login(nLog, r);
 		
-		if(result.hasErrors()) {
-			m.addAttribute("newUser", new User());
+		if(r.hasErrors()) {
+			m.addAttribute("nUser", new User());
 			return "dashboard.jsp";
 		}
 		return "redirect:/home";
