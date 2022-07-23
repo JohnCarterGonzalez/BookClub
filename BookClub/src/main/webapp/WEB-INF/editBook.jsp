@@ -19,7 +19,6 @@
 </head>
 <body>
 <div class="container">
-<div class="container">
 	<h2 class="text-success">Edit a Book</h2>
 	<form:form action="books/{id}" class="form" method="post" modelAttribute="book">
 		<input type="hidden" name="_method" value="put">
