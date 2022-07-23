@@ -35,7 +35,7 @@ public class BookService {
 	}
 
 	public void delete(Book b) {
-		brepo.delete(b);
+		brepo.deleteById(b);
 	}
 
 }
