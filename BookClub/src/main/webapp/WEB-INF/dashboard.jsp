@@ -38,10 +38,10 @@
 					<td><c:out value="${x.author}"/></td>
 					<td><c:out value="${x.user.userName}"/></td>
 					<td><a href="/books/edit/{x.id}"<c:out value="${x.id}"/>">Edit</a>
-					<form action="/books/${x.id}" method="post">
-					    <input type="hidden" name="_method" value="delete">
-					    <input type="submit" class="btn btn-danger" value="Delete">
-					</form>
+					<form:form action="/books/${x.id}" method="post">
+					    <form:input type="hidden" name="_method" value="delete">
+					    <form:input type="submit" class="btn btn-danger" value="Delete">
+					</form:form>
 					</td>
 				</tr>	
 			</c:forEach>
