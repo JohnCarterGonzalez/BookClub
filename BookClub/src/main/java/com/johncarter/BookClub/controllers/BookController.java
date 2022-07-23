@@ -41,14 +41,14 @@ public class BookController {
 		}
 
 		m.addAttribute("books", brepo.all());
-		m.addAttribute("user", urepo.findById(Long)s.getAttribute("userId")));
+		m.addAttribute("user", urepo.findById((Long)s.getAttribute("userId")));
 		return "dashboard.jsp";
 	}
 
 	@GetMapping("/add/book")
 	public String addBook(@ModelAttribute("book") Book b, Model m, HttpSession s) {
 
-		User user = urepo.findById(Long)s.getAttribute("userId"));
+		User user = urepo.findById((Long)s.getAttribute("userId"));
 		m.addAttribute("user", user);
 
 		return "addBook.jsp";
@@ -77,7 +77,7 @@ public class BookController {
 
 		Book b = brepo.findById(id);
 		m.addAttribute("book", b);
-		m.addAttribute("user", urepo.findById(Long)s.getAttribute("userId")));
+		m.addAttribute("user", urepo.findById((Long)s.getAttribute("userId")));
 		return "showBook.jsp";
 	}
 
