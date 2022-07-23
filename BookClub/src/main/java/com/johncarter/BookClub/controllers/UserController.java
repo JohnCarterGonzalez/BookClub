@@ -35,7 +35,7 @@ public class UserController {
 
 		//store Id of user, log them in
 		s.setAttribute("userId", user.getId());
-		return "redirect:/home";
+		return "redirect:/dash";
 	}
 	
 	@PostMapping("/log")
@@ -49,6 +49,6 @@ public class UserController {
 		}
 		
 		s.setAttribute("userId", user.getId());
-		return "redirect:/home";
+		return "redirect:/dash";
 	}
 }
