@@ -47,6 +47,8 @@ public class UserController {
 			m.addAttribute("nUser", new User());
 			return "dashboard.jsp";
 		}
+		
+		s.setAttribute("userId", user.getId());
 		return "redirect:/home";
 	}
 }
