@@ -32,7 +32,7 @@ public class BookController {
 	GetMapping for the App
 	*/
 
-	@GetMapping("/dashboard")
+	@GetMapping("/dash")
 	public String dash(Model m, HttpSession s) {
 
 		//if the user is not in session return to login page
